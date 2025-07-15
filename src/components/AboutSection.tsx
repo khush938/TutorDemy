@@ -1,7 +1,7 @@
 import React from 'react';
 
 const burgundy = '#5a1b16';
-const beige = '#b3836f';
+// const beige = '#b3836f';
 
 const AboutSection: React.FC = () => {
   return (

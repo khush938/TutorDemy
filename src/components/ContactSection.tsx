@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 
 const burgundy = '#5a1b16';
-const beige = '#b3836f';
+// const beige = '#b3836f';
 
 const ContactSection: React.FC = () => {
   const [formData, setFormData] = useState({

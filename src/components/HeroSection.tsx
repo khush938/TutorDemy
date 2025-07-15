@@ -2,7 +2,7 @@ import React from 'react';
 import heroIllustration from '../assets/hero-illustration.svg';
 import heroBg from '../assets/hero-bg-2.svg';
 
-const burgundy = '#5a1b16';
+// const burgundy = '#5a1b16';
 const beige = '#b3836f';
 
 const HeroSection: React.FC = () => {

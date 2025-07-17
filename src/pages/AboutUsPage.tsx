@@ -1,6 +1,6 @@
 import React from 'react';
-import TeamDescription from '../components/TeamDescription';
-import WelcomeVideo from '../components/WelcomeVideo';
+// import TeamDescription from '../components/TeamDescription';
+// import WelcomeVideo from '../components/WelcomeVideo';
 import Header from '../components/Header';
 import Footer from '../components/Footer';
 

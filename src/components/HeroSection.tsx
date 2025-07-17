@@ -1,6 +1,7 @@
 import React from 'react';
-import heroIllustration from '../assets/hero-illustration.svg';
-import heroBg from '../assets/hero-bg-2.svg';
+import heroIllustration from '../assets/Hero/hero-illustration.svg';
+import tutorDemyLogo from '../assets/tutorDemyLogo/TD_HighQuality_NameWhite.png';
+// import heroBg from '../assets/Hero/hero-bg-2.svg';
 
 // const burgundy = '#5a1b16';
 const beige = '#b3836f';
@@ -14,7 +15,6 @@ const HeroSection: React.FC = () => {
         style={{
           width: '100vw',
           height: '100vh',
-          backgroundImage: `url(${heroBg})`
         }}
       />
 
@@ -23,10 +23,14 @@ const HeroSection: React.FC = () => {
       <div className="flex-1 flex flex-col lg:flex-row items-center justify-center w-full mx-auto w-full relative z-10 pt-12 lg:pt-0">
         {/* Left: Text */}
         <div className="flex-1 flex flex-col justify-center items-start px-4 lg:px-8 xl:px-12 pt-8 lg:pt-0 ml-[12.5vw]">
-          <h1 className="text-white text-xl sm:text-2xl md:text-3xl lg:text-4xl xl:text-5xl 2xl:text-7xl font-normal leading-tight">
-            <span className="block">Tutor<span className="font-bold">Demy</span></span>
-            <span className="block font-bold mt-2">LEARNING</span>
-          </h1>
+          <div>
+            <img
+              src={tutorDemyLogo}
+              alt="TutorDemy Logo"
+              className="w-32 sm:w-40 md:w-48 lg:w-56 xl:w-64 2xl:w-72 h-auto"
+              draggable={false}
+            />
+          </div>
           <p className="text-white text-sm sm:text-sm md:text-base lg:text-lg xl:text-xl 2xl:text-2xl mt-4 sm:mt-6 max-w-md lg:max-w-lg xl:max-w-xl">
             Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore
           </p>
@@ -38,7 +42,7 @@ const HeroSection: React.FC = () => {
           </button>
         </div>
         {/* Right: Illustration */}
-        <div className="flex-1 flex items-center justify-end w-full h-full mt-24 lg:mt-0 pr-4 lg:pr-8 xl:pr-12 mr-[8vw]">
+        <div className="flex-1 flex items-center justify-end w-full h-full mt-24 lg:mt-12 pr-12 lg:pr-8 xl:pr-12 mr-[2vw]">
           <img
             src={heroIllustration}
             alt="Hero Illustration"

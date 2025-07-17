@@ -2,7 +2,7 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import tutorDemyLogo from '../assets/tutorDemyLogo/TD_HighQuality_NameWhite.png';
 
-const burgundy = '#5a1b16';
+// const burgundy = '#5a1b16';
 const beige = '#b3836f';
 
 interface HeaderProps {

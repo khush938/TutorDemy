@@ -4,7 +4,7 @@ import edexcelLogo from '../assets/ExamBoards/Edexel.svg';
 import ocrLogo from '../assets/ExamBoards/OCR.png';
 import wjecLogo from '../assets/ExamBoards/wjec.svg';
 
-const burgundy = '#5a1b16';
+// const burgundy = '#5a1b16';
 // const beige = '#b3836f';
 
 const ExamBoardSection: React.FC = () => {

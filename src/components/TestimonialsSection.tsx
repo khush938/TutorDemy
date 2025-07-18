@@ -1,101 +1,178 @@
-import React from 'react';
-
-const burgundy = '#5a1b16';
-// const beige = '#b3836f';
+import React, { useEffect, useRef, useState } from 'react';
 
 const TestimonialsSection: React.FC = () => {
+  const sectionRef = useRef<HTMLElement>(null);
+  const cardsRef = useRef<HTMLDivElement>(null);
+  const [isVisible, setIsVisible] = useState(false);
+  const [currentIndex, setCurrentIndex] = useState(0);
+
   const testimonials = [
     {
-      name: 'Sarah Johnson',
-      role: 'A-Level Student',
-      subject: 'Mathematics',
-      rating: 5,
-      testimonial: 'TutorDemy helped me improve my grades from a C to an A* in just 6 months. My tutor was incredibly patient and explained complex concepts in a way that finally made sense to me.',
-      avatar: '👩‍🎓'
+      id: '01',
+      quote: 'Homeschooling with you gave my children their childhood back.',
+      color: '#ef4444' // red
     },
     {
-      name: 'Michael Chen',
-      role: 'GCSE Student',
-      subject: 'Physics',
-      rating: 5,
-      testimonial: 'The online tutoring sessions were so convenient and effective. My physics tutor used real-world examples that made the subject come alive. Highly recommended!',
-      avatar: '👨‍🎓'
+      id: '02',
+      quote: 'Three hours with a tutor is like a week in school - I learnt so much, so quickly.',
+      color: '#f97316' // orange
     },
     {
-      name: 'Emma Rodriguez',
-      role: 'University Student',
-      subject: 'Spanish',
-      rating: 5,
-      testimonial: 'Learning Spanish with a native speaker through TutorDemy was amazing. I went from basic phrases to conversational fluency in just one semester.',
-      avatar: '👩‍🎓'
+      id: '03',
+      quote: '96% of our pupils improve overall exam performance after time spent with our tutors.',
+      color: '#8b5cf6' // purple
     },
     {
-      name: 'David Thompson',
-      role: 'Parent',
-      subject: 'Multiple Subjects',
-      rating: 5,
-      testimonial: 'As a parent, I was worried about online tutoring, but TutorDemy exceeded my expectations. My daughter\'s confidence and grades have improved dramatically.',
-      avatar: '👨‍👩‍👧‍👦'
+      id: '04',
+      quote: 'Homeschooling has made my child calmer, more engaged, and happier. I cannot thank you enough.',
+      color: '#475569' // slate
     },
     {
-      name: 'Lisa Park',
-      role: 'Adult Learner',
-      subject: 'Computer Science',
-      rating: 5,
-      testimonial: 'Returning to education as an adult was daunting, but my TutorDemy tutor made it so accessible. I\'m now confident in my programming skills.',
-      avatar: '👩‍💻'
+      id: '05',
+      quote: 'I don\'t know what kind of magic you do, but it worked! Thank you!',
+      color: '#ef4444' // red
     },
     {
-      name: 'James Wilson',
-      role: 'IB Student',
-      subject: 'Economics',
-      rating: 5,
-      testimonial: 'The personalized approach at TutorDemy is what sets it apart. My tutor tailored every session to my learning style and exam board requirements.',
-      avatar: '👨‍🎓'
+      id: '06',
+      quote: 'Not only are we delighted with our son\'s results, but we are hugely impressed with how much he has grown, how much he has learned about himself.',
+      color: '#f97316' // orange
+    },
+    {
+      id: '07',
+      quote: 'From start to finish, everyone has been outstanding and we are extremely grateful for your expertise and really positive approach.',
+      color: '#8b5cf6' // purple
     }
   ];
 
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            setIsVisible(true);
+          }
+        });
+      },
+      {
+        threshold: 0.1,
+        rootMargin: '0px 0px -50px 0px'
+      }
+    );
+
+    if (sectionRef.current) {
+      observer.observe(sectionRef.current);
+    }
+
+    return () => observer.disconnect();
+  }, []);
+
+  const nextSlide = () => {
+    setCurrentIndex((prevIndex) => (prevIndex + 1) % testimonials.length);
+  };
+
+  const prevSlide = () => {
+    setCurrentIndex((prevIndex) => 
+      prevIndex === 0 ? testimonials.length - 1 : prevIndex - 1
+    );
+  };
+
+  const goToSlide = (index: number) => {
+    setCurrentIndex(index);
+  };
+
+  // Get the 4 cards to display (current index + next 3)
+  const getVisibleCards = () => {
+    const cards = [];
+    for (let i = 0; i < 4; i++) {
+      const index = (currentIndex + i) % testimonials.length;
+      cards.push(testimonials[index]);
+    }
+    return cards;
+  };
+
   return (
-    <section className="py-20 px-4 bg-white">
+    <section ref={sectionRef} className="py-20 px-4 overflow-hidden" style={{ backgroundColor: '#f0f9f0' }}>
       <div className="max-w-7xl mx-auto">
-        <div className="text-center mb-16">
-          <h2 className="text-4xl lg:text-5xl font-bold text-gray-800 mb-4">What Our Students Say</h2>
-          <p className="text-xl text-gray-600 max-w-3xl mx-auto">
-            Real stories from students who have transformed their learning journey with TutorDemy
-          </p>
+        <div className="mb-16">
+          <h2 className="text-4xl lg:text-5xl font-bold text-gray-800">Testimonials</h2>
         </div>
         
-        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8 mb-12">
-          {testimonials.map((testimonial, index) => (
-            <div key={index} className="bg-white p-8 rounded-2xl shadow-lg border border-gray-100 hover:shadow-xl hover:-translate-y-2 transition-all duration-300">
-              <div className="flex items-center mb-4">
-                <div className="text-3xl mr-4">{testimonial.avatar}</div>
-                <div>
-                  <h4 className="font-semibold text-gray-800">{testimonial.name}</h4>
-                  <p className="text-sm text-gray-600">{testimonial.role} • {testimonial.subject}</p>
+        <div className="relative">
+          <div 
+            ref={cardsRef}
+            className={`flex gap-0 mb-12 transition-transform duration-1000 ease-out ${
+              isVisible ? 'translate-x-0' : 'translate-x-full'
+            }`}
+            style={{ width: '85vw', height: '70vh' }}
+          >
+            {getVisibleCards().map((testimonial, index) => (
+              <div 
+                key={`${testimonial.id}-${currentIndex}-${index}`}
+                className="p-8 rounded-2xl text-white relative flex flex-col justify-center items-center text-center flex-1"
+                style={{ backgroundColor: testimonial.color }}
+              >
+                <div className="flex justify-between items-start mb-4 w-full">
+                  <span className="text-2xl font-bold">{testimonial.id}</span>
+                  <svg className="w-8 h-8 text-white" fill="currentColor" viewBox="0 0 24 24">
+                    <path d="M14.017 21v-7.391c0-5.704 3.731-9.57 8.983-10.609l.995 2.151c-2.432.917-3.995 3.638-3.995 5.849h4v10h-9.983zm-14.017 0v-7.391c0-5.704 3.748-9.57 9-10.609l.996 2.151c-2.433.917-3.996 3.638-3.996 5.849h3.983v10h-9.983z"/>
+                  </svg>
                 </div>
+                
+                <p className="text-2xl leading-relaxed flex-grow flex items-center justify-center font-normal" style={{ transform: 'translateY(-10%)' }}>
+                  "{testimonial.quote}"
+                </p>
               </div>
-              
-              <div className="flex mb-4">
-                {[...Array(testimonial.rating)].map((_, i) => (
-                  <span key={i} className="text-yellow-400">⭐</span>
-                ))}
-              </div>
-              
-              <p className="text-gray-600 leading-relaxed italic">
-                "{testimonial.testimonial}"
-              </p>
-            </div>
+            ))}
+          </div>
+
+          {/* Navigation Buttons */}
+          <button 
+            onClick={prevSlide}
+            className="absolute left-4 top-1/2 transform -translate-y-1/2 bg-white bg-opacity-80 hover:bg-opacity-100 rounded-full p-3 shadow-lg transition-all duration-300 z-10"
+          >
+            <svg className="w-6 h-6 text-gray-800" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
+            </svg>
+          </button>
+          
+          <button 
+            onClick={nextSlide}
+            className="absolute right-4 top-1/2 transform -translate-y-1/2 bg-white bg-opacity-80 hover:bg-opacity-100 rounded-full p-3 shadow-lg transition-all duration-300 z-10"
+          >
+            <svg className="w-6 h-6 text-gray-800" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+            </svg>
+          </button>
+        </div>
+        
+        {/* Pagination Dots */}
+        <div className="flex items-center justify-center space-x-2">
+          {testimonials.map((_, index) => (
+            <button
+              key={index}
+              onClick={() => goToSlide(index)}
+              className={`w-3 h-3 rounded-full transition-all duration-300 ${
+                index === currentIndex ? 'bg-gray-800 scale-125' : 'bg-gray-300 hover:bg-gray-400'
+              }`}
+            />
           ))}
         </div>
         
-        <div className="text-center">
-          <button 
-            className="px-8 py-4 text-white font-semibold rounded-lg hover:shadow-lg hover:-translate-y-1 transition-all duration-300"
-            style={{ backgroundColor: burgundy }}
-          >
-            Read More Testimonials
-          </button>
+        <div className="flex items-center justify-center mt-4">
+          <div className="flex items-center space-x-4">
+            <span className="text-lg font-semibold text-gray-800">
+              {String(currentIndex + 1).padStart(2, '0')}
+            </span>
+            <div className="w-16 h-1 bg-gray-300 rounded-full">
+              <div 
+                className="h-1 bg-gray-600 rounded-full transition-all duration-300"
+                style={{ width: `${((currentIndex + 1) / testimonials.length) * 100}%` }}
+              ></div>
+            </div>
+            <span className="text-lg font-semibold text-gray-800">
+              {String(testimonials.length).padStart(2, '0')}
+            </span>
+          </div>
         </div>
       </div>
     </section>

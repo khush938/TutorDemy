@@ -16,33 +16,56 @@ const AboutUsPage: React.FC = () => {
     }
   };
 
+  const handleMouseMove = (e: React.MouseEvent) => {
+    const gradient = document.getElementById('moving-gradient');
+    if (gradient) {
+      const rect = e.currentTarget.getBoundingClientRect();
+      const x = ((e.clientX - rect.left) / rect.width) * 100;
+      const y = ((e.clientY - rect.top) / rect.height) * 100;
+      
+      gradient.style.background = `
+        radial-gradient(circle at ${x}% ${y}%, ${burgundy} 0%, transparent 50%), 
+        radial-gradient(circle at ${100 - x}% ${100 - y}%, ${burgundy}40 0%, transparent 50%),
+        radial-gradient(circle at ${50 + (x - 50) * 0.5}% ${50 + (y - 50) * 0.5}%, ${burgundy}20 0%, transparent 70%)
+      `;
+    }
+  };
+
   return (
-    <div className="min-h-screen" style={{ backgroundColor: ivory }}>
+    <div className="min-h-screen" style={{ backgroundColor: '#1a1a1a' }}>
       <Header currentPage="about" />
 
       <main className="pt-16">
         {/* Hero Section */}
-        <section className="relative min-h-[80vh] flex items-center justify-center overflow-hidden">
-          {/* Background Blob */}
+        <section 
+          className="relative min-h-[80vh] flex items-center justify-center overflow-hidden"
+          onMouseMove={handleMouseMove}
+        >
+          {/* Moving Gradient Background */}
           <div 
-            className="absolute inset-0 flex items-center justify-center"
+            className="fixed inset-0 w-full h-screen"
             style={{ zIndex: 1 }}
           >
             <div 
-              className="w-96 h-96 lg:w-[500px] lg:h-[500px] rounded-full opacity-20 blur-3xl"
-              style={{ 
-                background: `radial-gradient(circle, ${burgundy} 0%, transparent 70%)`,
-                filter: 'blur(60px)'
+              id="moving-gradient"
+              className="absolute inset-0 w-full h-full"
+              style={{
+                background: `radial-gradient(circle at 50% 50%, ${burgundy} 0%, transparent 40%), 
+                           radial-gradient(circle at 50% 50%, ${burgundy}40 0%, transparent 40%),
+                           radial-gradient(circle at 50% 50%, ${burgundy}20 0%, transparent 60%)`,
+                filter: 'blur(30px)',
+                backgroundSize: '110% 110%',
+                backgroundPosition: 'center'
               }}
             />
           </div>
           
           {/* Hero Content */}
           <div className="relative z-10 text-center px-4 max-w-4xl mx-auto">
-            <h1 className="text-6xl lg:text-8xl xl:text-9xl font-bold mb-8 tracking-tight" style={{ color: burgundy }}>
+            <h1 className="text-6xl lg:text-8xl xl:text-9xl font-bold mb-8 tracking-tight" style={{ color: ivory }}>
               About Us
             </h1>
-            <p className="text-xl lg:text-2xl text-[#2d2320] max-w-3xl mx-auto leading-relaxed mb-12">
+            <p className="text-xl lg:text-2xl text-gray-200 max-w-3xl mx-auto leading-relaxed mb-12">
               We play to win. Period. TutorDemy is built by passionate educators and students 
               who understand the challenges of academic life.
             </p>
@@ -57,7 +80,7 @@ const AboutUsPage: React.FC = () => {
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 14l-7 7m0 0l-7-7m7 7V3" />
                 </svg>
               </button>
-              <span className="text-sm text-[#2d2320]">Explore Now</span>
+              <span className="text-sm text-gray-200">Explore Now</span>
             </div>
           </div>
         </section>
@@ -82,7 +105,7 @@ const AboutUsPage: React.FC = () => {
             </div>
             {/* Mission Statement */}
             <div className="text-center max-w-4xl mx-auto">
-              <p className="text-xl lg:text-2xl text-[#2d2320] leading-relaxed">
+              <p className="text-xl lg:text-2xl text-gray-200 leading-relaxed">
                 We play to win. Period. TutorDemy is built by former students turned educators, 
                 developers, and academic professionals. We run our tutoring like we studied—focused, 
                 relentless, and always pushing the edge of what's possible in education.
@@ -114,7 +137,7 @@ const AboutUsPage: React.FC = () => {
                   </div>
                   <div>
                     <h3 className="text-[#5a1b16] font-semibold text-lg">{member.name}</h3>
-                    <p className="text-[#2d2320] text-sm">{member.title}</p>
+                    <p className="text-gray-300 text-sm">{member.title}</p>
                   </div>
                 </div>
               ))}
@@ -156,7 +179,7 @@ const AboutUsPage: React.FC = () => {
                   className="border border-[#e2d6c2] bg-white bg-opacity-60 rounded-lg p-6 hover:border-[#b3836f] transition-colors"
                 >
                   <h3 className="text-[#5a1b16] font-semibold text-lg mb-3">{faq.question}</h3>
-                  <p className="text-[#2d2320] leading-relaxed">{faq.answer}</p>
+                  <p className="text-gray-300 leading-relaxed">{faq.answer}</p>
                 </div>
               ))}
             </div>
@@ -169,7 +192,7 @@ const AboutUsPage: React.FC = () => {
             <h2 className="text-5xl lg:text-7xl font-bold text-[#5a1b16] mb-8">
               Learn. Grow. Succeed.
             </h2>
-            <p className="text-xl text-[#2d2320] mb-12">
+            <p className="text-xl text-gray-200 mb-12">
               Join thousands of students who have transformed their academic journey with TutorDemy
             </p>
             <button 
